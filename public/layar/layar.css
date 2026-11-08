@@ -1,0 +1,86 @@
+/* Layar kelas: ukuran memakai vw agar terbaca dari belakang kelas di IFP. */
+body.layar { overflow: hidden; background: radial-gradient(ellipse at 20% 0%, #1b1450 0%, var(--bg) 60%); }
+body.layar main { min-height: 100vh; padding: 2.2vw 3vw; display: grid; }
+.layar h1 { font-size: 2.6vw; }
+.tunggu { display: grid; place-content: center; justify-items: center; gap: 2vw; text-align: center; }
+.tunggu p { font-size: 2.2vw; color: var(--dim); }
+.lobi { display: grid; grid-template-columns: 27vw minmax(0, 1fr); gap: 3vw; align-items: start; }
+.kiri { display: grid; gap: 1.4vw; justify-items: start; }
+.qr.besar { width: 100%; max-width: none; padding: .8vw; }
+.layar .kode { font-size: 3.4vw; }
+.layar .url { font-size: 1.5vw; }
+.layar .dim { font-size: 1.4vw; }
+.kanan { display: grid; gap: 1.6vw; align-content: start; }
+.atas { display: flex; justify-content: space-between; align-items: center; gap: 1.5vw; }
+.hitung { font: 2vw var(--f-px); color: var(--gold); }
+.layar .chip { font-size: 1.3vw; padding: .4vw 1vw; }
+.arena { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(10vw, 1fr)); gap: 1.2vw; }
+.arena li { display: grid; justify-items: center; gap: .5vw; min-width: 0; padding: 1vw .6vw; background: rgba(31, 28, 87, .6); border: .25vw solid var(--line); }
+.arena canvas { width: 5.4vw; height: 7.2vw; image-rendering: pixelated; }
+.arena .nama { font-weight: 700; font-size: 1.5vw; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.arena .off { opacity: .45; }
+.arena .masuk { animation: muncul .35s steps(4, end); }
+@keyframes muncul { from { transform: translateY(1.2vw); opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .arena .masuk { animation: none; } }
+.kosong { font-size: 1.6vw; }
+@media (max-width: 800px) {
+  body.layar main { padding: 16px; }
+  .lobi { grid-template-columns: 1fr; }
+  .layar h1 { font-size: 22px; } .layar .kode { font-size: 28px; } .layar .url, .layar .dim, .kosong { font-size: 16px; }
+  .hitung { font-size: 16px; } .layar .chip { font-size: 14px; }
+  .arena { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); }
+  .arena canvas { width: 48px; height: 64px; } .arena .nama { font-size: 15px; }
+}
+
+/* ---------- lomba berjalan ---------- */
+.lomba, .akhir { display: grid; gap: 1.4vw; align-content: start; min-height: 0; }
+.lbar { display: flex; align-items: center; gap: 2vw; }
+.lbar h1 { margin-right: auto; }
+.lkode { font: 1.8vw var(--f-px); color: var(--gold); }
+.ltime { font: 3.2vw var(--f-px); color: var(--cyan); min-width: 9vw; text-align: right; }
+.ltime.low { color: var(--bad); }
+.lisi { display: grid; grid-template-columns: minmax(0, 1fr) 29vw; gap: 2vw; align-items: start; }
+.lisi.padat { grid-template-columns: minmax(0, 1fr); }
+.lisi.padat .lanes { display: none; }
+.lanes { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .9vw; align-content: start; }
+.lanes.satu { grid-template-columns: minmax(0, 1fr); max-width: 40vw; }
+.lane { position: relative; border: .2vw solid var(--line); background: #000; line-height: 0; }
+.lane canvas { width: 100%; height: auto; aspect-ratio: 320 / 84; image-rendering: pixelated; display: block; }
+.lane .info { position: absolute; left: .5vw; top: .3vw; right: .5vw; display: flex; justify-content: space-between; gap: .8vw; line-height: 1.2; font-weight: 700; font-size: 1.15vw; text-shadow: 0 .12vw 0 #000; pointer-events: none; }
+.lane .info b { font: .95vw var(--f-px); color: var(--gold); }
+.lane .info span:first-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.lane.mati canvas { filter: grayscale(.8) brightness(.7); }
+.papan { list-style: none; margin: 0; padding: 0; display: grid; gap: .45vw; align-content: start; counter-reset: r; }
+.lisi.padat .papan { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .4vw 1.2vw; }
+.papan li { display: grid; grid-template-columns: 2.2vw 3vw minmax(0, 1fr) auto auto; gap: .7vw; align-items: center; padding: .3vw .7vw; background: rgba(31, 28, 87, .7); border-left: .3vw solid var(--line); font-size: 1.35vw; }
+.papan li:nth-child(1) { border-left-color: var(--gold); } .papan li:nth-child(2) { border-left-color: #c9d1e6; } .papan li:nth-child(3) { border-left-color: #d8894a; }
+.papan .no { font: 1vw var(--f-px); color: var(--dim); }
+.papan canvas { width: 2.6vw; height: 3.5vw; image-rendering: pixelated; }
+.papan .nm { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 700; }
+.papan .nm small { display: block; font-size: .8vw; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--dim); }
+.papan .nm small.menjawab { color: var(--cyan); } .papan .nm small.slow { color: var(--gold); } .papan .nm small.mati { color: var(--bad); }
+.papan .nv { display: inline-flex; gap: .2vw; } .papan .nv i { width: .8vw; height: .8vw; background: #3d3a86; display: block; } .papan .nv i.on { background: #ff4f7b; }
+.papan .sk { font: 1.1vw var(--f-px); color: var(--gold); min-width: 4.5vw; text-align: right; }
+.papan li.off { opacity: .45; }
+.lisi.padat .papan li { grid-template-columns: 2vw 2.2vw minmax(0, 1fr) auto auto; font-size: 1.1vw; padding: .15vw .5vw; }
+.lisi.padat .papan canvas { width: 1.9vw; height: 2.5vw; }
+.lisi.sangat .papan { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .3vw .8vw; }
+.lisi.sangat .papan li { font-size: .95vw; grid-template-columns: 1.6vw 1.7vw minmax(0, 1fr) auto auto; padding: .1vw .4vw; gap: .4vw; }
+.lisi.sangat .papan canvas { width: 1.5vw; height: 2vw; }
+.lisi.sangat .papan .nm small { display: none; }
+.lisi.sangat .papan .sk { font-size: .8vw; min-width: 3vw; }
+.lisi.sangat .papan .nv i { width: .55vw; height: .55vw; }
+.lisi.sangat .papan .no { font-size: .7vw; }
+.apod { font-size: 2.1vw; }
+.apod.banyak { font-size: 1.45vw; }
+.apod.banyak .pdm-daftar { grid-template-columns: 1fr 1fr; }
+@media (max-width: 800px) {
+  .ltime { font-size: 22px; } .lkode { font-size: 14px; }
+  .lisi { grid-template-columns: 1fr; } .lane .info { font-size: 13px; } .lane .info b { font-size: 11px; }
+  .papan li { font-size: 15px; grid-template-columns: 24px 34px minmax(0, 1fr) auto auto; } .papan .no { font-size: 11px; } .papan .sk { font-size: 12px; }
+  .papan canvas { width: 28px; height: 38px; } .papan .nm small { font-size: 10px; } .apod { font-size: 14px; }
+}
+.arena.banyak { grid-template-columns: repeat(auto-fill, minmax(6vw, 1fr)); gap: .7vw; }
+.arena.banyak li { padding: .5vw .3vw; gap: .2vw; }
+.arena.banyak canvas { width: 3.4vw; height: 4.5vw; }
+.arena.banyak .nama { font-size: 1.05vw; }

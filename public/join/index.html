@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-visual">
+<title>Kelas Runner</title>
+<link rel="stylesheet" href="/shared/kr.css">
+<link rel="stylesheet" href="/join/join.css">
+<link rel="stylesheet" href="/shared/podium.css">
+<link rel="stylesheet" href="/join/game.css">
+</head>
+<body>
+<main class="wrap sempit">
+  <header class="head"><h1>KELAS <span>RUNNER</span></h1></header>
+  <p class="banner" id="putus" hidden>Terputus dari server. Mencoba menyambung lagi...</p>
+
+  <section class="card" id="vKode" hidden>
+    <p class="kick">Masuk ke room</p>
+    <p>Scan kode QR dari layar kelas, atau ketik kode room.</p>
+    <div class="row"><label class="lbl" for="kodeIn">Kode room</label><input type="text" id="kodeIn" maxlength="6" autocomplete="off" autocapitalize="characters" placeholder="Contoh: K7M2QX"></div>
+    <button class="btn primary" id="bKode" type="button">LANJUT</button>
+  </section>
+
+  <section class="card" id="vForm" hidden>
+    <p class="kick">Siapa yang main?</p>
+    <div class="preview"><canvas id="prev" class="av besar" width="48" height="64" aria-label="Pratinjau karakter"></canvas></div>
+    <div class="row"><label class="lbl" for="nama">Nama panggilan</label><input type="text" id="nama" maxlength="12" autocomplete="off" placeholder="Maksimal 12 huruf"></div>
+    <div class="row"><span class="lbl">Warna badan</span><div class="pills" id="swSkin"></div></div>
+    <div class="row"><span class="lbl">Warna baju</span><div class="pills" id="swShirt"></div></div>
+    <div class="row"><span class="lbl">Ekspresi</span><div class="pills" id="pExpr"></div></div>
+    <div class="row"><span class="lbl">Topi</span><div class="pills" id="pHat"></div></div>
+    <p class="err" id="eForm" role="alert"></p>
+    <button class="btn primary" id="bMasuk" type="button">MASUK</button>
+  </section>
+
+  <section class="card tengah" id="vLobby" hidden>
+    <p class="kick" id="lStatus">Kamu di lobby</p>
+    <canvas id="prev2" class="av besar" width="48" height="64" aria-hidden="true"></canvas>
+    <h2 id="lNama"></h2>
+    <p id="lInfo" class="dim"></p>
+    <p id="lPesan"></p>
+  </section>
+
+  <section class="card tengah" id="vAkhir" hidden>
+    <p class="kick">Selesai</p>
+    <p id="aPesan"></p>
+    <button class="btn" id="bUlang" type="button">MASUK LAGI</button>
+  </section>
+</main>
+
+<div id="vGame" hidden>
+  <div id="stage">
+    <canvas id="cv" width="480" height="270" aria-label="Arena lari"></canvas>
+    <div id="zones" hidden>
+      <div class="zone" id="zDuck" data-hint="TAHAN: MERUNDUK"></div>
+      <div class="zone" id="zJump" data-hint="TAP: LOMPAT (tahan = lebih tinggi)"></div>
+    </div>
+    <div id="hud" hidden>
+      <div><span><small id="hudStage">Stage 1</small><span id="hudScore">0</span></span><span><small>Peringkat</small><span id="hudRank">-</span></span></div>
+      <div><span><small>Sisa waktu</small><span id="hudTime">0:00</span></span></div>
+      <div>
+        <span><small>Nyawa</small><span class="hearts" id="hudHearts"></span></span>
+        <span><small>Koin</small><span id="hudCoin">0</span></span>
+        <button class="hbtn" id="bMute" aria-pressed="false" aria-label="Matikan suara" type="button">SFX</button>
+        <button class="hbtn" id="bFull" aria-label="Layar penuh" type="button">[ ]</button>
+      </div>
+    </div>
+    <div id="banner" hidden></div>
+
+    <section class="quiz" id="quiz" hidden aria-live="polite">
+      <div class="q-top"><span id="qMeta"></span><span id="qSec"></span></div>
+      <div class="q-bar" id="qBarWrap"><i id="qBar"></i></div>
+      <div class="q-body" id="qBody"><p id="qText"></p><pre id="qKode" hidden></pre></div>
+      <div class="opts wait" id="qOpts"></div>
+      <form class="isian wait" id="qForm" autocomplete="off" hidden>
+        <input type="text" id="qInput" maxlength="60" placeholder="Ketik jawabanmu" aria-label="Jawaban isian" autocapitalize="none" autocomplete="off" spellcheck="false">
+        <button class="btn primary" type="submit">KIRIM</button>
+      </form>
+    </section>
+
+    <section class="fb" id="fb" hidden aria-live="polite">
+      <p id="fbHead"></p><p id="fbAns"></p><p id="fbWhy"></p><p id="fbNote"></p>
+      <div class="fb-foot"><div class="fb-bar"><i id="fbBar"></i></div><button class="btn primary" id="bLanjut" type="button">LANJUT</button></div>
+    </section>
+
+    <section class="screen tengahv" id="scrSiap" hidden>
+      <p class="kick">Sesi dimulai</p>
+      <h2 id="siapNama"></h2>
+      <p class="besar-teks" id="siapInfo"></p>
+      <p class="besar-teks">Layar kanan lompat, layar kiri merunduk. Salah dua kali, kamu jatuh. Setelah jatuh, kamu boleh main lagi dan nilai terbaikmu yang dihitung.</p>
+      <div class="actions"><button class="btn primary" id="bLari" type="button">LARI!</button></div>
+    </section>
+
+    <section class="screen" id="scrHasil" hidden>
+      <div class="kolom2">
+        <div class="kol">
+          <p class="kick" id="hAlasan"></p>
+          <h2 id="hNama"></h2>
+          <div class="bigscore"><span id="hTotal">0</span><small>poin lari ini</small></div>
+          <p class="rankline" id="hBest"></p>
+          <p class="rankline" id="hRank"></p>
+        </div>
+        <div class="kol">
+          <dl class="break" id="hBreak"></dl>
+          <p class="kick">Soal yang perlu diulang</p>
+          <ul class="salah" id="hSalah"></ul>
+        </div>
+      </div>
+      <div class="actions"><span class="kick" id="hSisa"></span><button class="btn primary" id="bUlang2" type="button">MAIN LAGI</button></div>
+    </section>
+
+    <section class="screen" id="scrAkhir" hidden>
+      <p class="kick" id="akPesan">Sesi selesai</p>
+      <div id="akPodium"></div>
+      <p class="rankline" id="akKamu"></p>
+    </section>
+
+    <section class="screen tengahv" id="scrNonton" hidden>
+      <p class="kick">Kamu penonton</p>
+      <h2>Sesi sedang berjalan</h2>
+      <p class="besar-teks">Kamu masuk setelah sesi dimulai, jadi kamu menonton dulu. Tiga teratas saat ini:</p>
+      <ul class="minilist" id="nTop"></ul>
+      <p class="kick" id="nSisa"></p>
+    </section>
+  </div>
+</div>
+<div id="rotate" role="alert"><div class="ph"></div><p>Putar HP ke mode landscape</p><small>Layar mendatar membuat jalur lari lebih lebar.</small></div>
+<script src="/shared/avatar.js"></script>
+<script src="/shared/dunia.js"></script>
+<script src="/shared/podium.js"></script>
+<script src="/shared/net.js"></script>
+<script src="/shared/ui.js"></script>
+<script src="/join/game.js"></script>
+<script src="/join/join.js"></script>
+</body>
+</html>

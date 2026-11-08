@@ -1,0 +1,29 @@
+/* Ukuran podium memakai em. Pembungkus menentukan font-size. */
+.pdm { display: grid; grid-template-columns: 1.15fr 1fr; gap: 1.6em; align-items: end; min-height: 0; font-size: 1em; }
+.pdm.sempit { grid-template-columns: 1fr; }
+.pdm-pod { display: flex; align-items: flex-end; justify-content: center; gap: .6em; }
+.pdm-kol { display: flex; flex-direction: column; align-items: center; gap: .25em; width: 7.6em; min-width: 0; }
+.pdm-kol canvas { width: 5.2em; height: 6.9em; image-rendering: pixelated; }
+.pdm-nama { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 700; font-size: 1.05em; }
+.pdm-skor { font: .8em var(--f-px); color: var(--gold); }
+.pdm-blok { width: 100%; display: grid; place-items: center; font: 1.4em var(--f-px); color: #1a1030; box-shadow: inset 0 .45em 0 rgba(255,255,255,.3), inset -.55em 0 0 rgba(0,0,0,.25); }
+.pdm-blok.r1 { height: 6.6em; background: var(--gold); }
+.pdm-blok.r2 { height: 4.7em; background: #c9d1e6; }
+.pdm-blok.r3 { height: 3.3em; background: #d8894a; }
+.pdm-kol.juara canvas { animation: pdm-hop 1.1s steps(2, end) infinite; }
+.pdm-kol.aku .pdm-nama { color: var(--cyan); }
+@keyframes pdm-hop { 50% { transform: translateY(-.5em); } }
+.pdm-sisi { display: grid; gap: .8em; align-content: end; min-width: 0; }
+.pdm-daftar { margin: 0; padding: 0; list-style: none; display: grid; gap: .3em; overflow: auto; }
+.pdm-daftar li { display: grid; grid-template-columns: 1.8em 1fr auto; gap: .5em; padding: .3em .6em; background: var(--panel); font-size: .95em; }
+.pdm-daftar li.aku { outline: .15em solid var(--cyan); }
+.pdm-daftar li.belum { opacity: .55; }
+.pdm-daftar .no { font: .8em var(--f-px); color: var(--dim); align-self: center; }
+.pdm-daftar .nm { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pdm-daftar .sk { font-weight: 700; color: var(--gold); }
+.pdm .tag { margin-left: .5em; padding: .1em .4em; border: .12em solid var(--line); font-size: .75em; color: var(--dim); }
+.pdm-aw { display: grid; gap: .35em; font-size: .95em; }
+.pdm-aw div { display: flex; justify-content: space-between; gap: .8em; border-left: .25em solid var(--gold); padding-left: .6em; }
+.pdm-aw span { color: var(--dim); }
+.pdm-info { color: var(--dim); font-size: .95em; }
+@media (prefers-reduced-motion: reduce) { .pdm-kol.juara canvas { animation: none; } }

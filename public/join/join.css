@@ -1,0 +1,5 @@
+.sempit { max-width: 560px; }
+.preview { display: grid; place-items: center; padding: 14px; background: linear-gradient(#0f0c33, #241a63); border: 3px solid var(--line); }
+.av.besar { width: 120px; height: 160px; }
+.tengah { justify-items: center; text-align: center; }
+.tengah h2 { font-size: 20px; }

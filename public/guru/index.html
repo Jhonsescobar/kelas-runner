@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kelas Runner Guru</title>
+<link rel="stylesheet" href="/shared/kr.css">
+<link rel="stylesheet" href="/shared/podium.css">
+</head>
+<body>
+<main class="wrap">
+  <header class="head">
+    <h1>KELAS <span>RUNNER</span></h1>
+    <span class="chip">Dashboard guru</span>
+  </header>
+  <p class="banner" id="putus" hidden>Terputus dari server. Mencoba menyambung lagi...</p>
+
+  <nav class="tab" id="tab" hidden aria-label="Bagian dashboard">
+    <button type="button" id="tSesi" aria-pressed="true">Sesi</button>
+    <button type="button" id="tBank" aria-pressed="false">Bank soal</button>
+  </nav>
+
+  <section class="card s460" id="vLogin">
+    <p class="kick">Masuk</p>
+    <p>Masukkan PIN yang tampil di jendela server.</p>
+    <form id="fLogin" class="form" autocomplete="off">
+      <input type="password" id="pin" inputmode="numeric" maxlength="8" aria-label="PIN guru" placeholder="PIN">
+      <button class="btn primary" type="submit">MASUK</button>
+    </form>
+    <p class="err" id="eLogin" role="alert"></p>
+  </section>
+
+  <section class="card s620" id="vBuat" hidden>
+    <p class="kick">Buat room</p>
+    <div class="row"><label class="lbl" for="kap">Jumlah pemain maksimal (1 sampai 40)</label><input type="number" id="kap" min="1" max="40" value="10"></div>
+    <div class="row"><span class="lbl">Durasi permainan</span><div class="pills" id="pDur"></div></div>
+    <div class="row"><span class="lbl">Tema</span><div class="pills" id="pTema"></div></div>
+    <div class="row"><span class="lbl">Jenis soal</span><div class="pills" id="pJenis"></div></div>
+    <div class="row"><label class="lbl" for="bank">Bank soal</label><select id="bank"></select>
+      <p class="dim kecilteks" id="bankInfo"></p></div>
+    <div class="row"><label class="lbl" for="host">Alamat laptop (yang dipakai HP siswa)</label><select id="host"></select>
+      <p class="dim kecilteks">Pilih alamat dari WiFi atau hotspot yang dipakai HP siswa. Biasanya yang pertama.</p></div>
+    <button class="btn primary" id="bBuat" type="button">BUAT ROOM</button>
+    <p class="err" id="eBuat" role="alert"></p>
+  </section>
+
+  <section id="vRoom" hidden class="dua">
+    <div class="card">
+      <p class="kick">Scan untuk masuk</p>
+      <img class="qr" id="qr" alt="Kode QR untuk masuk ke room">
+      <p class="kode" id="kode"></p>
+      <p class="url" id="url"></p>
+      <div class="aksi">
+        <button class="btn kecil" id="bSalin" type="button">Salin alamat</button>
+        <a class="btn kecil" id="aLayar" href="/layar" target="_blank" rel="noopener noreferrer">Buka layar kelas</a>
+      </div>
+      <p class="dim kecilteks">HP siswa harus tersambung ke WiFi atau hotspot yang sama dengan laptop ini.</p>
+    </div>
+    <div class="card">
+      <div class="head">
+        <p class="kick" id="hitung"></p>
+        <span class="chip" id="status"></span>
+      </div>
+      <p class="dim" id="info"></p>
+      <ul class="pemain" id="daftar"></ul>
+      <p class="dim" id="kosong">Belum ada yang masuk. Minta siswa scan kode QR.</p>
+      <div class="aksi atas">
+        <button class="btn primary" id="bMulai" type="button">MULAI SESI</button>
+        <button class="btn danger" id="bTutup" type="button">TUTUP ROOM</button>
+      </div>
+      <p class="err" id="eRoom" role="alert"></p>
+    </div>
+  </section>
+
+  <section class="card" id="vMonitor" hidden>
+    <div class="head">
+      <div><p class="kick">Sesi berjalan</p><p class="dim" id="mInfo"></p></div>
+      <span class="waktu" id="mWaktu">0:00</span>
+    </div>
+    <table class="tabel" id="mTabel"><thead><tr><th>#</th><th>Nama</th><th class="n">Skor</th><th>Nyawa</th><th>Status</th><th class="n">Jarak</th></tr></thead><tbody id="mIsi"></tbody></table>
+    <div class="aksi"><button class="btn danger" id="bAkhiri" type="button">AKHIRI SEKARANG</button></div>
+  </section>
+
+  <section class="card" id="vHasil" hidden>
+    <div class="head"><div><p class="kick" id="hJudul">Hasil sesi</p><p class="dim" id="hInfo"></p></div>
+      <div class="aksi"><button class="btn kecil" id="bCsv" type="button">Unduh CSV</button><button class="btn kecil danger" id="bBaruRoom" type="button">Tutup room</button></div></div>
+    <div class="apodg" id="hPodium"></div>
+    <div class="kotak" id="hRingkas"></div>
+    <p class="kick">Soal yang paling banyak salah</p>
+    <div class="sorot" id="hSulit"></div>
+    <p class="kick">Jawaban isian yang perlu kamu cek sendiri</p>
+    <p class="dim kecilteks">Jawaban yang dinilai salah oleh sistem. Bila ada yang sebenarnya benar, tambahkan variasinya ke kolom "diterima" untuk sesi berikutnya.</p>
+    <div class="sorot" id="hIsian"></div>
+  </section>
+
+  <div id="pBank" hidden class="dua lebar">
+    <div class="card">
+      <p class="kick">Bank tersimpan</p>
+      <ul class="daftarbank" id="bDaftar"></ul>
+      <button class="btn kecil" id="bBaru" type="button">Bank baru</button>
+    </div>
+    <div class="card">
+      <p class="kick" id="bJudul">Bank baru</p>
+      <div class="row"><label class="lbl" for="bNama">Nama bank (misalnya topik)</label><input type="text" id="bNama" maxlength="60" placeholder="Contoh: Python dasar"></div>
+      <details class="row" id="dPrompt"><summary class="lbl">1. Minta AI membuatkan soal (salin prompt)</summary>
+        <div class="form">
+          <div class="row"><label class="lbl" for="pTopik">Topik</label><input type="text" id="pTopik" maxlength="80" placeholder="Contoh: variabel dan tipe data Python"></div>
+          <div class="row"><label class="lbl" for="pLevel">Untuk siapa</label><input type="text" id="pLevel" maxlength="60" value="SMP kelas 8"></div>
+          <div class="row"><label class="lbl" for="pJumlah">Jumlah soal</label><input type="number" id="pJumlah" min="5" max="60" value="20"></div>
+          <div class="row"><span class="lbl">Isi</span><div class="pills" id="pKomp"></div></div>
+          <div class="row"><span class="lbl">Soal kode</span><div class="pills" id="pKode"></div></div>
+          <textarea class="pendek" id="pHasil" readonly aria-label="Prompt untuk AI"></textarea>
+          <div class="aksi"><button class="btn kecil" id="bSalinPrompt" type="button">Salin prompt</button></div>
+          <p class="dim kecilteks">Tempel prompt ke ChatGPT, Gemini, atau Claude. Salin jawabannya ke kotak di bawah.</p>
+        </div>
+      </details>
+      <div class="row"><label class="lbl" for="bTeks">2. Tempel soal (format JSON) di sini</label><textarea id="bTeks" spellcheck="false" placeholder="[ { &quot;tipe&quot;: &quot;pg&quot;, &quot;teks&quot;: &quot;...&quot;, ... } ]"></textarea></div>
+      <div class="aksi"><button class="btn primary" id="bPeriksa" type="button">PERIKSA</button><button class="btn" id="bSimpan" type="button" disabled>SIMPAN BANK</button></div>
+      <div id="bPesan" role="status"></div>
+      <ul class="prev" id="bPrev"></ul>
+    </div>
+  </div>
+</main>
+
+<script src="/vendor/qrcode.js"></script>
+<script src="/shared/avatar.js"></script>
+<script src="/shared/dunia.js"></script>
+<script src="/shared/podium.js"></script>
+<script src="/shared/net.js"></script>
+<script src="/shared/ui.js"></script>
+<script src="/guru/guru.js"></script>
+</body>
+</html>

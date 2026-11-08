@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kelas Runner Layar</title>
+<link rel="stylesheet" href="/shared/kr.css">
+<link rel="stylesheet" href="/shared/podium.css">
+<link rel="stylesheet" href="/layar/layar.css">
+</head>
+<body class="layar">
+<main>
+  <section class="tunggu" id="vTunggu">
+    <h1>KELAS <span>RUNNER</span></h1>
+    <p>Menunggu guru membuat room.</p>
+  </section>
+
+  <section class="lobi" id="vLobi" hidden>
+    <div class="kiri">
+      <h1>KELAS <span>RUNNER</span></h1>
+      <img class="qr besar" id="qr" alt="Kode QR untuk masuk ke room">
+      <p class="kode" id="kode"></p>
+      <p class="url" id="url"></p>
+      <p class="dim">Scan dengan kamera HP, lalu buat karaktermu.</p>
+    </div>
+    <div class="kanan">
+      <div class="atas">
+        <p class="hitung" id="hitung"></p>
+        <span class="chip" id="status"></span>
+      </div>
+      <ul class="arena" id="daftar"></ul>
+      <p class="dim kosong" id="kosong">Karakter pemain akan muncul di sini.</p>
+    </div>
+  </section>
+
+  <section class="lomba" id="vLomba" hidden>
+    <header class="lbar">
+      <h1>KELAS <span>RUNNER</span></h1>
+      <span class="chip" id="lTema"></span>
+      <span class="lkode" id="lKode"></span>
+      <span class="ltime" id="lWaktu" aria-live="off">0:00</span>
+    </header>
+    <div class="lisi" id="lIsi">
+      <ul class="lanes" id="lanes"></ul>
+      <ol class="papan" id="papan"></ol>
+    </div>
+  </section>
+
+  <section class="akhir" id="vAkhir" hidden>
+    <header class="lbar"><h1>PODIUM <span>SESI</span></h1><span class="chip" id="aInfo"></span></header>
+    <div class="apod" id="aPodium"></div>
+    <p class="dim kosong" id="aCatatan"></p>
+  </section>
+</main>
+<script src="/vendor/qrcode.js"></script>
+<script src="/shared/avatar.js"></script>
+<script src="/shared/dunia.js"></script>
+<script src="/shared/podium.js"></script>
+<script src="/shared/net.js"></script>
+<script src="/layar/layar.js"></script>
+</body>
+</html>
